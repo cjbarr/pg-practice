@@ -40,6 +40,18 @@ app.get('/songs', (req,res)=>{
 })//end /songs GET
 
 
+app.get('/songs/:id', (req,res)=>{
+  console.log('in /songs delete', req.params.id);
+  let queryString = `SELECT * FROM songs WHERE "id"=${req.params.id}`;
+  pool.query(queryString).then((results) => {
+res.send(results.rows);
+}).catch((err) => {
+      //catch any errors
+      console.log(err);
+      res.sendStatus(500);
+})
+})
+
 app.post('/songs', (req,res)=>{
   console.log('in songs POST', req.body);
   let queryString = 'INSERT INTO songs("rank","artist","track","published") VALUES($1, $2, $3, $4)';

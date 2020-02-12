@@ -33,6 +33,16 @@ function onReady(){
 
 function deleteSong(){
 console.log('delete')
+  $.ajax({
+      type: 'GET',
+      url: '/songs/100'
+  }).then(function (response) {
+      console.log('back from get with', response);
+      displaySongs(response);
+  }).catch(function (err) {
+      console.log(err);
+      alert('not working');
+  }) //end ajax
 }
 
 
@@ -41,7 +51,7 @@ function getSongs(){
     //make an ajax request
     $.ajax({
         type:'GET',
-        url:'songs'
+        url:'/songs'
     }).then(function(response){
         console.log('back from get with', response);
         displaySongs(response);
@@ -55,6 +65,6 @@ function displaySongs(responseArray){
     let el = $('#displaySpot');
     el.empty();
     for(i=0;i<responseArray.length;i++){
-        el.append(`<li>${responseArray[i].artist}<br> ${responseArray[i].track}</li><button class='deleteButton'>Delete</button><br><br>`)
+        el.append(`<li>(${responseArray[i].id})${responseArray[i].artist}<br> ${responseArray[i].track}</li><button class='deleteButton'>Delete</button><br><br>`)
     }
 }
