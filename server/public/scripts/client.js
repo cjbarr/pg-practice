@@ -32,13 +32,14 @@ function onReady(){
 
 
 function deleteSong(){
-console.log('delete')
+let selectedId = $(this).parent().data('id');
+console.log(selectedId);
   $.ajax({
-      type: 'GET',
-      url: '/songs/100'
+      type: 'DELETE',
+      url: `/songs/${selectedId}`
   }).then(function (response) {
       console.log('back from get with', response);
-      displaySongs(response);
+      getSongs();
   }).catch(function (err) {
       console.log(err);
       alert('not working');
@@ -65,6 +66,6 @@ function displaySongs(responseArray){
     let el = $('#displaySpot');
     el.empty();
     for(i=0;i<responseArray.length;i++){
-        el.append(`<li>(${responseArray[i].id})${responseArray[i].artist}<br> ${responseArray[i].track}</li><button class='deleteButton'>Delete</button><br><br>`)
+        el.append(`<li data-id=${responseArray[i].id}>(${responseArray[i].id})${responseArray[i].artist}<br> ${responseArray[i].track}<button class='deleteButton'>Delete</button></li><br><br>`)
     }
 }

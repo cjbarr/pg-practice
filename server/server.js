@@ -40,9 +40,9 @@ app.get('/songs', (req,res)=>{
 })//end /songs GET
 
 
-app.get('/songs/:id', (req,res)=>{
+app.delete('/songs/:id', (req,res)=>{
   console.log('in /songs delete', req.params.id);
-  let queryString = `SELECT * FROM songs WHERE "id"=${req.params.id}`;
+  let queryString = `DELETE FROM songs WHERE "id"=${req.params.id}`;
   pool.query(queryString).then((results) => {
 res.send(results.rows);
 }).catch((err) => {
