@@ -26,8 +26,16 @@ console.log(err);
 function onReady(){
     console.log('yoo');
     getSongs();
-    $('#addSongButton').on('click', addSong)
+    $('#addSongButton').on('click', addSong);
+    $('#displaySpot').on('click', '.deleteButton', deleteSong)
 }
+
+
+function deleteSong(){
+console.log('delete')
+}
+
+
 
 function getSongs(){
     //make an ajax request
@@ -36,9 +44,17 @@ function getSongs(){
         url:'songs'
     }).then(function(response){
         console.log('back from get with', response);
-
+        displaySongs(response);
     }).catch(function(err){
         console.log(err);
         alert('not working');
     })//end ajax
 }//end get
+
+function displaySongs(responseArray){
+    let el = $('#displaySpot');
+    el.empty();
+    for(i=0;i<responseArray.length;i++){
+        el.append(`<li>${responseArray[i].artist}<br> ${responseArray[i].track}</li><button class='deleteButton'>Delete</button><br><br>`)
+    }
+}
